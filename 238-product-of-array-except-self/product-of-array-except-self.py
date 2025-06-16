@@ -11,9 +11,9 @@ class Solution:
             # multiple current index with product of all nums to its left,
             # and accumulate prefix running product
             res[i] *= prefixProduct
+            prefixProduct *= nums[i]
             
             # mirror the same for the suffix
-            prefixProduct *= nums[i]
             res[-i - 1] *= suffixProduct
             suffixProduct *= nums[-i - 1]
         
