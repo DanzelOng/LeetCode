@@ -1,28 +1,23 @@
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         if not root:
             return []
 
-        # in-order traversal: Left - Root - Right
+        # in-order traversal: Left -> Root -> Right
         stack = [root]
+        visited = set()
         res = []
 
         while stack:
             node = stack[-1]
 
-            if node.left and not hasattr(node.left, 'visited'):
+            if node.left and node.left not in visited:
                 stack.append(node.left)
 
             else:
                 stack.pop()
                 res.append(node.val)
-                node.visited = True
+                visited.add(node)
                 
                 if node.right:
                     stack.append(node.right)
