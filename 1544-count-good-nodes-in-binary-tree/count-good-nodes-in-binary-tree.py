@@ -1,27 +1,15 @@
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
-        # keep track of no. of good nodes
-        cnter = 0   
-
-        def preorderDfs(node, maxPathSum):
-            nonlocal cnter
-
+        def dfs(node, val):
+            # return 0 when node is NULL since no good nodes were encountered
             if node is None:
-                return
-
-            # checks if node is a good node and increment count
-            # a node is good if it's node value >= current max path sum (root to current node)
-            if node.val >= maxPathSum:
-                cnter += 1
+                return 0
             
-            # update maximum path sum from root to current node
-            maxPathSum = max(maxPathSum, node.val)
-            
-            # pre-orderly traverse left and right subtrees
-            preorderDfs(node.left, maxPathSum)
-            preorderDfs(node.right, maxPathSum)
+            # update max value seen so far from root to current node
+            val = max(val, node.val)
 
-        preorderDfs(root, root.val)
-
-        # return no. of good nodes
-        return cnter      
+            # checks if current node is a good node and perform boolean to integer casting to count no. of good nodes
+            # perform the same check on the left and right subtree of current node
+            return int(node.val >= val) + dfs(node.left, val) + dfs(node.right, val)
+        
+        return dfs(root, root.val)
